@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/abiosoft/semaphore"
+	"math/rand"
 	"runtime"
 	"sync"
 	"sync/atomic"
-	"github.com/abiosoft/semaphore"
-	"math/rand"
 	"time"
 )
 
@@ -73,8 +73,9 @@ func prodConsPeterson() {
 	go func() {
 		for i := 0; i < n; i++ {
 			atomic.StoreInt32(&flag[0], 1) // flag[0] = true
-			atomic.StoreInt32(&turn, 1) // turn = 1
-			for atomic.LoadInt32(&flag[1]) == 1 && atomic.LoadInt32(&turn) == 1 {} // for flag[1] && turn == 1 {}
+			atomic.StoreInt32(&turn, 1)    // turn = 1
+			for atomic.LoadInt32(&flag[1]) == 1 && atomic.LoadInt32(&turn) == 1 {
+			} // for flag[1] && turn == 1 {}
 
 			counter++
 			atomic.StoreInt32(&flag[0], 0) // flag[0] = false
@@ -86,8 +87,9 @@ func prodConsPeterson() {
 	go func() {
 		for i := 0; i < n; i++ {
 			atomic.StoreInt32(&flag[1], 1) // flag[1] = true
-			atomic.StoreInt32(&turn, 0) // turn = 0
-			for atomic.LoadInt32(&flag[0]) == 1 && atomic.LoadInt32(&turn) == 0 {} // for flag[1] && turn == 0 {}
+			atomic.StoreInt32(&turn, 0)    // turn = 0
+			for atomic.LoadInt32(&flag[0]) == 1 && atomic.LoadInt32(&turn) == 0 {
+			} // for flag[1] && turn == 0 {}
 
 			counter--
 			atomic.StoreInt32(&flag[1], 0) // flag[1] = false
@@ -111,7 +113,8 @@ func prodConsPeterson2() {
 		for i := 0; i < n; i++ {
 			flag[0] = true
 			turn = 1
-			for flag[1] && turn == 1 {}
+			for flag[1] && turn == 1 {
+			}
 
 			counter++
 
@@ -125,7 +128,8 @@ func prodConsPeterson2() {
 		for i := 0; i < n; i++ {
 			flag[1] = true
 			turn = 0
-			for flag[0] && turn == 0 {}
+			for flag[0] && turn == 0 {
+			}
 
 			counter--
 			flag[1] = false
@@ -145,7 +149,8 @@ func prodConsSwap() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < n; i++ {
-			for !atomic.CompareAndSwapInt32(&lock, 0, 1) {}
+			for !atomic.CompareAndSwapInt32(&lock, 0, 1) {
+			}
 
 			counter++
 
@@ -157,7 +162,8 @@ func prodConsSwap() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < n; i++ {
-			for !atomic.CompareAndSwapInt32(&lock, 0, 1) {}
+			for !atomic.CompareAndSwapInt32(&lock, 0, 1) {
+			}
 
 			counter--
 
@@ -284,14 +290,14 @@ func returnForks(i int) {
 	defer m.Unlock()
 	// fmt.Printf("returnForks: i=%d\n", i)
 	state[i] = THINKING
-	dpTest((i+4) % 5)
-	dpTest((i+1) % 5)
+	dpTest((i + 4) % 5)
+	dpTest((i + 1) % 5)
 }
 
 func dpTest(i int) {
-	if (state[(i+4) % 5] != EATING) &&
-	(state[i] == HUNGRY) &&
-	(state[(i+1) % 5] != EATING) {
+	if (state[(i+4)%5] != EATING) &&
+		(state[i] == HUNGRY) &&
+		(state[(i+1)%5] != EATING) {
 		state[i] = EATING
 		self[i].Signal()
 	}
@@ -309,7 +315,7 @@ func diningPhilosophers() {
 		fmt.Printf("diningPhilosphers i=%d\n", i)
 		wg.Add(1)
 		go func(j int) {
-			for k := 0; k<50; k++ {
+			for k := 0; k < 50; k++ {
 				takeForks(j)
 				// Eating.
 				returnForks(j)
