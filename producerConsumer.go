@@ -18,8 +18,6 @@ func prodConsIncorrect() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < 100000; i++ {
-			// time.Sleep(1 * time.Millisecond)
-			// fmt.Printf("Incrementer %d counter=%d\n", i, counter)
 			counter++
 		}
 		wg.Done()
@@ -28,8 +26,6 @@ func prodConsIncorrect() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < 100000; i++ {
-			// time.Sleep(1 * time.Millisecond)
-			// fmt.Printf("Decrementer %d\n counter=%d\n", i,counter)
 			counter--
 		}
 		wg.Done()
@@ -45,8 +41,6 @@ func prodConsMutex() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < 100000; i++ {
-			// time.Sleep(1 * time.Millisecond)
-			// fmt.Printf("Incrementer %d counter=%d\n", i, counter)
 			m.Lock()
 			counter++
 			m.Unlock()
@@ -57,8 +51,6 @@ func prodConsMutex() {
 	wg.Add(1)
 	go func() {
 		for i := 0; i < 100000; i++ {
-			// time.Sleep(1 * time.Millisecond)
-			// fmt.Printf("Decrementer %d\n counter=%d\n", i,counter)
 			m.Lock()
 			counter--
 			m.Unlock()
