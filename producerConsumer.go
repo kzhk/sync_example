@@ -295,9 +295,9 @@ func returnForks(i int) {
 }
 
 func dpTest(i int) {
-	if (state[(i+4)%5] != EATING) &&
+	if (state[(i + 4) % 5] != EATING) &&
 		(state[i] == HUNGRY) &&
-		(state[(i+1)%5] != EATING) {
+		(state[(i + 1) % 5] != EATING) {
 		state[i] = EATING
 		self[i].Signal()
 	}
