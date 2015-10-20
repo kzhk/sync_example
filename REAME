@@ -1,0 +1,1 @@
+Synchronization example.producerConsumer.go requires a library, github.com/abiosoft/semaphore .To install it, do the following:% go get github.com/abiosoft/semaphoreThen, just do the following:% go run producerConsumer.goSome error/warning could be printed.  This is because the dining philosophers program is incomplete; "monitor" is not perfectly emulated.
