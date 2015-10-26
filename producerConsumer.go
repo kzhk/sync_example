@@ -333,7 +333,7 @@ func main() {
     counter = 0
     prodConsIncorrect()
     fmt.Printf("counter=%d\n", counter)
-/*
+
     counter = 0
     prodConsMutex()
     fmt.Printf("counter=%d\n", counter)
@@ -357,5 +357,5 @@ func main() {
     diningPhilosophers()
 
     fmt.Println("main() Finished.")
-    */
+
 }
