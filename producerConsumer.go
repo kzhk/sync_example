@@ -329,10 +329,11 @@ func diningPhilosophers() {
 
 func main() {
     runtime.GOMAXPROCS(runtime.NumCPU())
+    //runtime.GOMAXPROCS(1)
     counter = 0
     prodConsIncorrect()
     fmt.Printf("counter=%d\n", counter)
-
+/*
     counter = 0
     prodConsMutex()
     fmt.Printf("counter=%d\n", counter)
@@ -356,4 +357,5 @@ func main() {
     diningPhilosophers()
 
     fmt.Println("main() Finished.")
+    */
 }
